@@ -1,7 +1,7 @@
 import path from 'path';
 import glob from 'glob';
-import applyTemplate from './extensions/rollup/rollup-apply-template.mjs';
-import authorName from './scripts/authorName.mjs';
+import applyTemplate from './extensions/rollup/rollup-apply-template.js';
+import authorName from './scripts/authorName.js';
 import { fileURLToPath } from 'url';
 import { argv } from 'process';
 

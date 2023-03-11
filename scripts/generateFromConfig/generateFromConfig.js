@@ -1,14 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-const YAML = require('yaml');
-const mkdirp = require('mkdirp');
-const { generateHeader } = require('./generateHeader');
-const { generateParameterReader } = require('./generateParameterReader');
-const { generatePluginCommand } = require('./generatePluginCommand');
-const { generateParameterType } = require('./generateParameterType');
-const { authorName } = require('../authorName.mjs');
+import generateHeader from './generateHeader.js';
+import authorName from '../authorName.js';
 
-async function generateFromConfig(file) {
+import * as fs from 'fs';
+import * as path from 'path';
+import * as YAML from 'yaml';
+import { mkdirp } from 'mkdirp';
+import generateParameterReader from './generateParameterReader.js';
+import generatePluginCommand from './generatePluginCommand.js';
+import generateParameterType from './generateParameterType.js';
+
+export default async function generateFromConfig(file) {
   const config = loadConfig(file);
   const distDir = path.resolve(file, '..', '_build');
   mkdirp.sync(distDir);
@@ -29,7 +30,3 @@ async function generateFromConfig(file) {
 function loadConfig(configPath) {
   return YAML.parse(fs.readFileSync(configPath, 'UTF-8'), { merge: true });
 }
-
-module.exports = {
-  generateFromConfig,
-};

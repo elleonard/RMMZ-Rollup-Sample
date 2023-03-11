@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build:config": "node ./scripts/generateFromConfig -f"
   },
@@ -11,7 +12,7 @@
     "cpx": "^1.5.0",
     "ejs": "^3.1.8",
     "mkdirp": "^2.1.5",
-    "prettier": "^2.8.4",
+    "prettier": "^3.0.0-alpha.6",
     "rollup": "^3.19.1",
     "yaml": "^2.2.1"
   }

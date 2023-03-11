@@ -1,10 +1,11 @@
-const path = require('path');
-const prettier = require('prettier');
-const prettierConfig = path.resolve(__dirname, '..', '..', '.prettierrc');
+import * as path from 'path';
+import * as prettier from 'prettier';
+import { fileURLToPath } from 'url';
+import { toJsTypeCategory, typeCategories } from "./generateParser.js";
 
-const { toJsTypeCategory, TYPE_CATEGORIES } = require("./generateParser");
+const prettierConfig = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '.prettierrc');
 
-function generateParameterType(config, pluginId) {
+export default function generateParameterType(config, pluginId) {
   let result = "";
   if (config.structures) {
     result += Object.entries(config.structures).map(([name, structure]) => {
@@ -34,22 +35,18 @@ function structTypeName(pluginId, structName) {
 function paramToType(pluginId, param) {
   const typeCategory = toJsTypeCategory(param);
   switch (typeCategory) {
-    case TYPE_CATEGORIES.NUMBER:
-    case TYPE_CATEGORIES.STRING:
-    case TYPE_CATEGORIES.BOOLEAN:
+    case typeCategories().NUMBER:
+    case typeCategories().STRING:
+    case typeCategories().BOOLEAN:
       return typeCategory;
-    case TYPE_CATEGORIES.ARRAY:
+    case typeCategories().ARRAY:
       const arrayOf = {
         type: param.type.replace('[]', ''),
         options: param.options,
       };
       return `${paramToType(pluginId, arrayOf)}[]`;
-    case TYPE_CATEGORIES.STRUCT:
+    case typeCategories().STRUCT:
       return structTypeName(pluginId, param.type);
   }
   return "";
 }
-
-module.exports = {
-  generateParameterType
-};

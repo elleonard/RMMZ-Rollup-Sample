@@ -1,10 +1,11 @@
-const path = require('path');
-const prettier = require('prettier');
-const { generateParser } = require('./generateParser');
-const { SYMBOL_TYPE } = require('./parameterSymbolType');
+import * as path from 'path';
+import * as prettier from 'prettier';
+import { fileURLToPath } from 'url';
+import generateParser from './generateParser.js';
+import symbolType from './parameterSymbolType.js';
 
-const prettierConfig = path.resolve(__dirname, '..', '..', '.prettierrc');
-function generatePluginCommand(config) {
+const prettierConfig = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '.prettierrc');
+export default function generatePluginCommand(config) {
   return prettier.resolveConfig(prettierConfig).then((options) => {
     options.parser = 'babel';
     const commands = configToCommands(config);
@@ -33,7 +34,7 @@ function configToCommands(config) {
             ? command.args.map((arg) => {
                 return {
                   name: arg.arg,
-                  parser: generateParser(config, arg, SYMBOL_TYPE.ARGS),
+                  parser: generateParser(config, arg, symbolType().ARGS),
                 };
               })
             : [],
@@ -51,7 +52,3 @@ function configToCommands(config) {
 function commandNameToSymbol(commandName) {
   return commandName.replace(/ ([a-z])/g, (m) => m.toUpperCase().trim());
 }
-
-module.exports = {
-  generatePluginCommand,
-};

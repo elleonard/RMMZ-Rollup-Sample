@@ -1,12 +1,14 @@
-const path = require('path');
-const glob = require('glob');
-const chokidar = require('chokidar');
+import path from 'path';
+import glob from 'glob';
+import chokidar from 'chokidar';
 
-const { generateFromConfig } = require('./generateFromConfig');
+import generateFromConfig from './generateFromConfig.js';
+import { fileURLToPath } from 'url';
 
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 const globPaths = [
-  path.resolve(__dirname, '..', '..', 'src', 'codes', '**', 'config.yml'),
-  path.resolve(__dirname, '..', '..', 'src', 'excludes', '**', 'config.yml'),
+  path.resolve(dirname, '..', '..', 'src', 'codes', '**', 'config.yml'),
+  path.resolve(dirname, '..', '..', 'src', 'excludes', '**', 'config.yml'),
 ];
 const isWatch = process.argv.some((n) => n === '-w');
 const targetDir = (() => {
@@ -14,7 +16,7 @@ const targetDir = (() => {
   const dir = 'codes';
 
   const pluginDir = index >= 0 ? process.argv[index + 1] : "";
-  return index >= 0 ? path.resolve(__dirname, '..', '..', 'src', dir, `${pluginDir}`, 'config.yml') : null;
+  return index >= 0 ? path.resolve(dirname, '..', '..', 'src', dir, `${pluginDir}`, 'config.yml') : null;
 })();
 
 async function generate(file) {

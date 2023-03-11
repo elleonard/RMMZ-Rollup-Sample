@@ -1,8 +1,8 @@
-const SYMBOL_TYPE = {
+export default function symbolType() {
+  return SYMBOL_TYPE;
+}
+
+export const SYMBOL_TYPE = {
   PLUGIN_PARAMETERS: 'pluginParameters',
   ARGS: 'args',
-};
-
-module.exports = {
-  SYMBOL_TYPE
 };

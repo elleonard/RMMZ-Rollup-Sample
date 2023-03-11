@@ -1,4 +1,4 @@
-const { authorName } = require("../authorName.mjs");
+import authorName from '../authorName.js';
 
 class TypedParameter {
   type() {
@@ -179,7 +179,7 @@ class TypedParameter {
     }
 }
 
-class PluginParameter extends TypedParameter {
+export class PluginParameter extends TypedParameter {
   constructor(parameter) {
     super();
     this._parameter = parameter;
@@ -323,7 +323,7 @@ class PluginCommand {
   }
 }
 
-function generateHeader(config) {
+export default function generateHeader(config) {
   const version = config.histories[0].version;
   const topCommentLine = generateTopComments(
     config.name,
@@ -584,8 +584,3 @@ function languageSuffixedType(type, language) {
   }
   return type;
 }
-
-module.exports = {
-  generateHeader,
-  PluginParameter,
-};
