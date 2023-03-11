@@ -1,0 +1,34 @@
+name: Plasma_SkillChangeState
+license: MIT
+histories:
+  - date: 2023/03/11
+    version: 1.0.0
+    description: '公開'
+locates:
+  - ja
+plugindesc:
+  ja: '使用可能なスキルを変更するステート'
+parameters:
+  - param: stateAndSkills
+    text:
+      ja: ステートとスキル一覧
+    desc:
+      ja: 指定ステートにかかっている場合、対応するスキルのみ使用可能になります
+    type: StateAndSkills[]
+    default: []
+commands:
+structures:
+  StateAndSkills:
+    - param: state
+      text:
+        ja: ステート
+      type: state
+      default: 0
+    - param: skills
+      text:
+        ja: スキル一覧
+      type: skill[]
+      default: []
+help:
+  ja: |
+    特定のステートにかかっている場合、対応するスキルのみ使用可能にします。
