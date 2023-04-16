@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
+import { fileURLToPath } from 'url';
 
 const targetDir = process.argv[process.argv.length - 1];
 if (!targetDir) process.exit(1);
