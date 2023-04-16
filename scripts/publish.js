@@ -9,13 +9,14 @@ if (!fs.statSync(targetDir).isDirectory()) {
   process.exit(1);
 }
 
-glob.sync(path.join(__dirname, '..', '_dist', 'codes', '*.js')).forEach((file) => {
-  const name = path.basename(file);
+glob.sync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '_dist', 'codes', '*.js'))
+  .forEach((file) => {
+    const name = path.basename(file);
 
-  console.log(`${file} to ${targetDir}`);
+    console.log(`${file} to ${targetDir}`);
 
-  fs.copyFileSync(file, path.join(targetDir, name));
-});
+    fs.copyFileSync(file, path.join(targetDir, name));
+  });
 
 /**
  * ちょっと雑な対応だが、消したいファイルをここに書いてコミットすると消せる
