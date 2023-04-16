@@ -3,16 +3,12 @@ import glob from 'glob';
 import applyTemplate from './extensions/rollup/rollup-apply-template.js';
 import authorName from './scripts/authorName.js';
 import { fileURLToPath } from 'url';
-import { argv } from 'process';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const targetJsList = (() => {
   const targetFile = (() => {
-    const plugin = (() => {
-      const index = argv.findIndex(n => n === '--target');
-      return index >= 0 ? argv[index+1] : '';
-    })();
+    const plugin = process.env.TARGET;
     const dir = 'codes';
     return plugin ? glob.sync(path.join(dirname, 'src', dir, `${plugin}`, `${authorName()}*.js`)) : null;
   })();
