@@ -6,7 +6,7 @@ const THIN_MESSAGE_WINDOW_SWITCH = 12;
 /**
  * 細くなったメッセージウィンドウの幅
  */
-const THIN_MESSAGE_WINDOW_WIDTH = 300;
+const THIN_MESSAGE_WINDOW_WIDTH = 350;
 
 function Window_Message_ThinMessageWindowMixIn(windowClass) {
   const _initialize = windowClass.initialize;
