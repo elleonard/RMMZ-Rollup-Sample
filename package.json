@@ -5,10 +5,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "buildAll": "run-s buildAll:*",
-    "build:config": "node ./scripts/generateFromConfig -f",
-    "buildAll:config": "node ./scripts/generateFromConfig",
-    "buildAll:js": "yarn rollup -c",
+    "build": "zx ./scripts/buildDispatcher/build.mjs",
+    "build:config:js": "node ./scripts/generateFromConfig -f",
+    "build:config": "zx ./scripts/buildDispatcher/build.mjs --configOnly",
+    "buildAll": "run-s buildAll:* build:format",
+    "buildAll:ts": "zx ./scripts/buildDispatcher/buildAll.mjs",
+    "build:format": "prettier --write ./_dist/**/*.js",
     "generate": "node ./scripts/generateDirectory"
   },
   "devDependencies": {
@@ -21,6 +23,7 @@
     "prettier": "^3.0.0-alpha.6",
     "rollup": "^3.19.1",
     "typescript": "^5.0.4",
-    "yaml": "^2.2.1"
+    "yaml": "^2.2.1",
+    "zx": "^7.2.2"
   }
 }
