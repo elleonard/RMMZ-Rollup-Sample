@@ -1,7 +1,5 @@
-/// <reference path="./MaskPicture.d.ts" />
-
 import { pluginName } from '../../common/pluginName';
-import { command_maskPicture, command_unmaskPicture, parseArgs_maskPicture, parseArgs_unmaskPicture } from './_build/Plasma_MaskPicture_commands';
+import { command_maskPicture, command_unmaskPicture, parseArgs_maskPicture, parseArgs_unmaskPicture } from './_build/Plasma_MaskPictureJS_commands';
 
 PluginManager.registerCommand(pluginName, command_maskPicture, function (args) {
   const parsedArgs = parseArgs_maskPicture(args);
