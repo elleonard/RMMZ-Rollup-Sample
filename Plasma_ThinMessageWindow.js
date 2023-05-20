@@ -56,9 +56,8 @@
 
     windowClass.windowWidth = function () {
       return $gameSwitches.value(THIN_MESSAGE_WINDOW_SWITCH) ? THIN_MESSAGE_WINDOW_WIDTH : this._defaultWidth;
-    };  
+    };
   }
 
   Window_Message_ThinMessageWindowMixIn(Window_Message.prototype);
-
 })();

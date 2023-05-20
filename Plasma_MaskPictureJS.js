@@ -91,7 +91,7 @@
       return this._maskPictureRequest;
     };
 
-    gameScreen.unmaskPictureRequest =  function () {
+    gameScreen.unmaskPictureRequest = function () {
       return this._unmaskPictureRequest;
     };
 
@@ -115,18 +115,21 @@
 
     spritesetClass.updateMask = function () {
       if ($gameScreen.maskPictureRequest()) {
-        const baseSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.maskPictureRequest().base);
-        const maskSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.maskPictureRequest().mask);
+        const baseSprite = this._pictureContainer.children.find(
+          (sprite) => sprite.pictureId() === $gameScreen.maskPictureRequest().base,
+        );
+        const maskSprite = this._pictureContainer.children.find(
+          (sprite) => sprite.pictureId() === $gameScreen.maskPictureRequest().mask,
+        );
         if (baseSprite && maskSprite) {
           baseSprite.setMask(maskSprite);
         }
         $gameScreen.resetMaskPictureRequest();
       }
       if ($gameScreen.unmaskPictureRequest()) {
-        const baseSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.unmaskPictureRequest());
+        const baseSprite = this._pictureContainer.children.find(
+          (sprite) => sprite.pictureId() === $gameScreen.unmaskPictureRequest(),
+        );
         if (baseSprite) {
           baseSprite.unmask();
         }
@@ -152,5 +155,4 @@
   }
 
   Sprite_Picture_MaskMixIn(Sprite_Picture.prototype);
-
 })();

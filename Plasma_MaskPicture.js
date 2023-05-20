@@ -1,10 +1,11 @@
-// Plasma_MaskPicture 1.0.0
+// Plasma_MaskPicture 1.0.1
 // Copyright (c) 2023 Plasma
 // This software is released under the MIT license.
 // http://opensource.org/licenses/mit-license.php
 
 /**
- * 2023/05/20 1.0.0 公開
+ * 2023/05/20 1.0.1 TypeScript移行
+ *            1.0.0 公開
  */
 
 /*:
@@ -31,7 +32,7 @@
  * @type number
  *
  * @help
- * version: 1.0.0
+ * version: 1.0.1
  * ピクチャでピクチャをマスクします。
  */
 
@@ -59,17 +60,14 @@
 
   const command_unmaskPicture = 'unmaskPicture';
 
-  
   PluginManager.registerCommand(pluginName, command_maskPicture, function (args) {
     const parsedArgs = parseArgs_maskPicture(args);
     $gameScreen.maskPicture(parsedArgs.base, parsedArgs.mask);
   });
-
   PluginManager.registerCommand(pluginName, command_unmaskPicture, function (args) {
     const parsedArgs = parseArgs_unmaskPicture(args);
     $gameScreen.unmaskPicture(parsedArgs.base);
   });
-
   function Game_Screen_MaskPictureMixIn(gameScreen) {
     gameScreen.maskPicture = function (basePictureId, maskPictureId) {
       const basePicture = this.picture(basePictureId);
@@ -77,57 +75,51 @@
       if (!basePicture || !maskPicture) {
         return;
       }
-
       this._maskPictureRequest = {
         base: basePictureId,
         mask: maskPictureId,
       };
     };
-
     gameScreen.unmaskPicture = function (basePictureId) {
       this._unmaskPictureRequest = basePictureId;
     };
-
     gameScreen.maskPictureRequest = function () {
       return this._maskPictureRequest;
     };
-
-    gameScreen.unmaskPictureRequest =  function () {
+    gameScreen.unmaskPictureRequest = function () {
       return this._unmaskPictureRequest;
     };
-
     gameScreen.resetMaskPictureRequest = function () {
       this._maskPictureRequest = undefined;
     };
-
     gameScreen.resetUnmaskPictureRequest = function () {
       this._unmaskPictureRequest = undefined;
     };
   }
-
   Game_Screen_MaskPictureMixIn(Game_Screen.prototype);
-
   function Spriteset_MaskPictureMixIn(spritesetClass) {
     const _update = spritesetClass.update;
     spritesetClass.update = function () {
       _update.call(this);
       this.updateMask();
     };
-
     spritesetClass.updateMask = function () {
       if ($gameScreen.maskPictureRequest()) {
-        const baseSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.maskPictureRequest().base);
-        const maskSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.maskPictureRequest().mask);
+        const baseSprite = this._pictureContainer.children.find(
+          (sprite) => sprite instanceof Sprite_Picture && sprite.pictureId() === $gameScreen.maskPictureRequest()?.base,
+        );
+        const maskSprite = this._pictureContainer.children.find(
+          (sprite) => sprite instanceof Sprite_Picture && sprite.pictureId() === $gameScreen.maskPictureRequest()?.mask,
+        );
         if (baseSprite && maskSprite) {
           baseSprite.setMask(maskSprite);
         }
         $gameScreen.resetMaskPictureRequest();
       }
       if ($gameScreen.unmaskPictureRequest()) {
-        const baseSprite = this._pictureContainer.children
-          .find(sprite => sprite.pictureId() === $gameScreen.unmaskPictureRequest());
+        const baseSprite = this._pictureContainer.children.find(
+          (sprite) => sprite instanceof Sprite_Picture && sprite.pictureId() === $gameScreen.unmaskPictureRequest(),
+        );
         if (baseSprite) {
           baseSprite.unmask();
         }
@@ -135,23 +127,17 @@
       }
     };
   }
-
   Spriteset_MaskPictureMixIn(Spriteset_Base.prototype);
-
   function Sprite_Picture_MaskMixIn(spritePicture) {
     spritePicture.setMask = function (sprite) {
       this.mask = sprite;
     };
-
     spritePicture.unmask = function () {
-      this.mask = undefined;
+      this.mask = null;
     };
-
     spritePicture.pictureId = function () {
       return this._pictureId;
     };
   }
-
   Sprite_Picture_MaskMixIn(Sprite_Picture.prototype);
-
 })();
