@@ -1,0 +1,42 @@
+name: Plasma_MaskPicture
+year: 2023
+license: MIT
+histories:
+  - date: 2023/05/20
+    version: 1.0.0
+    description: '公開'
+
+locates:
+  - ja
+plugindesc:
+  ja: 'ピクチャを別のピクチャでマスクする'
+parameters: []
+commands:
+  - command: maskPicture
+    text:
+      ja: ピクチャをマスクする
+    args:
+      - arg: base
+        text:
+          ja: ベースピクチャID
+        type: number
+      - arg: mask
+        text:
+          ja: マスクピクチャID
+        type: number
+  - command: unmaskPicture
+    text:
+      ja: ピクチャにかけたマスクを解除する
+    args:
+      - arg: base
+        text:
+          ja: ベースピクチャID
+        type: number
+structures:
+dependencies:
+  base: []
+  orderAfter: []
+  orderBefore: []
+help:
+  ja: |
+    ピクチャでピクチャをマスクします。
