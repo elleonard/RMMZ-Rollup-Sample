@@ -3,7 +3,9 @@ year: 2023
 license: MIT
 histories:
   - date: 2023/05/20
-    version: 1.0.0
+    version: 1.0.1
+    description: 'TypeScript移行'
+  - version: 1.0.0
     description: '公開'
 
 locates:
